@@ -19,6 +19,7 @@ public class Diario
         }
     }
 
+
     public void SalvarParaArquivo(string nomeArquivo)
     {
         using (StreamWriter arquivo = new StreamWriter(nomeArquivo))

@@ -20,6 +20,7 @@ class Program
             escolha = Console.ReadLine();
             Console.WriteLine();
 
+
             if (escolha == "1")
             {
                 string prompt = gerador.ObterPromptAleatorio();

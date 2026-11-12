@@ -12,6 +12,7 @@ public class GeradorDePrompts
         "Se eu pudesse fazer uma coisa de novo hoje, o que faria?"
     };
 
+
     public string ObterPromptAleatorio()
     {
         Random random = new Random();
