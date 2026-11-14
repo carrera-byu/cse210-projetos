@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 public class Escritura
 {
     private Referencia _referencia;
@@ -8,54 +11,45 @@ public class Escritura
         _referencia = referencia;
         _palavras = new List<Palavra>();
 
-        string[] partes = texto.Split(' ');
-        foreach (string parte in partes)
+        foreach (string palavraTexto in texto.Split(' '))
         {
-            Palavra palavra = new Palavra(parte);
-            _palavras.Add(palavra);
+            _palavras.Add(new Palavra(palavraTexto));
         }
     }
 
-    public void OcultarPalavrasAleatorias(int numeroParaOcultar)
+    public void OcultarPalavrasAleatorias(int quantidade)
     {
+        List<Palavra> visiveis = _palavras.Where(p => !p.EstaOculta()).ToList();
+        if (visiveis.Count == 0)
+        {
+            return;
+        }
+        if (quantidade > visiveis.Count)
+        {
+            quantidade = visiveis.Count;
+        }
+
         Random random = new Random();
-        int ocultadas = 0;
-
-        while (ocultadas < numeroParaOcultar)
+        for (int i = 0; i < quantidade; i++)
         {
-            int indice = random.Next(_palavras.Count);
-            if (!_palavras[indice].EstaOculta())
-            {
-                _palavras[indice].Ocultar();
-                ocultadas++;
-            }
-
-            if (EstaCompletamenteOculta())
-            {
-                break;
-            }
+            int indice = random.Next(visiveis.Count);
+            visiveis[indice].Ocultar();
+            visiveis.RemoveAt(indice);
         }
     }
 
-    public string ObterTexto()
+    public string GetTextoExibicao()
     {
-        string texto = _referencia.ObterTexto() + " - ";
+        string texto = _referencia.GetTextoExibicao() + "\n";
         foreach (Palavra palavra in _palavras)
         {
-            texto += palavra.ObterTexto() + " ";
+            texto += palavra.GetTextoExibicao() + " ";
         }
         return texto;
     }
 
     public bool EstaCompletamenteOculta()
     {
-        foreach (Palavra palavra in _palavras)
-        {
-            if (!palavra.EstaOculta())
-            {
-                return false;
-            }
-        }
-        return true;
+        return _palavras.All(p => p.EstaOculta());
     }
 }

@@ -1,39 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 public class Palavra
 {
     private string _texto;
-    private bool _estaOculta;
+    private bool _oculta;
 
     public Palavra(string texto)
     {
         _texto = texto;
-        _estaOculta = false;
+        _oculta = false;
     }
 
     public void Ocultar()
     {
-        _estaOculta = true;
-    }
-
-    public void Exibir()
-    {
-        _estaOculta = false;
+        _oculta = true;
     }
 
     public bool EstaOculta()
     {
-        return _estaOculta;
+        return _oculta;
     }
 
-    public string ObterTexto()
+    public string GetTextoExibicao()
     {
-        if (_estaOculta)
+        if (_oculta)
         {
-            string oculto = "";
-            foreach (char c in _texto)
-            {
-                oculto += "_";
-            }
-            return oculto;
+            return new string('_', _texto.Length);
         }
         else
         {
